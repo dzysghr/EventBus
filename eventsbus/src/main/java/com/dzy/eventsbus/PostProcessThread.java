@@ -10,8 +10,9 @@ import java.util.concurrent.Executors;
 
 public class PostProcessThread extends Thread
 {
-    private Handler mMainHandler = new Handler(Looper.getMainLooper());
-    private Executor mExecutor = Executors.newFixedThreadPool(3);
+    final static private Handler mMainHandler = new Handler(Looper.getMainLooper());
+    private Executor mExecutor = Executors.newFixedThreadPool(ThreadPoorCount);
+    public static final int ThreadPoorCount = 3;
 
     ArrayBlockingQueue<PostRequest> mQueue;
     private boolean mQuit = false;
@@ -71,6 +72,9 @@ public class PostProcessThread extends Thread
             }
             catch (Exception e) {
                 e.printStackTrace();
+            }
+            finally {
+                mPostRequest = null;
             }
         }
     }

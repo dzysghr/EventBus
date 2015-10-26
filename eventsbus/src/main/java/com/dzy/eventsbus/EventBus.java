@@ -53,82 +53,13 @@ public class EventBus
 
 	}
 
-	public void register(Object o)
+
+	public void register(Object object)
 	{
-		register(o, 0);
+		register(object, 0);
 	}
 
 	public synchronized void register(Object object, int priority)
-	{
-
-		Class<?> type = object.getClass();
-		Method[] methods = type.getDeclaredMethods();
-		List<Class<?>> typelist = null;
-		try
-		{
-			for (int i = 0; i < methods.length; i++)
-			{
-				Method method = methods[i];
-				if (method.getName().equals("onEvent"))
-				{
-					if (!Modifier.isPublic(method.getModifiers()))// if is not
-																	// public
-						throw new Exception("onEvent method is not public");
-
-					Class<?>[] parasTypes = method.getParameterTypes();
-					if (parasTypes.length != 1)// if is has 0 or more than 1 //
-												// params;
-					{
-						throw new Exception("can not support the parameter");
-					}
-					Class<?> parastype = parasTypes[0];
-
-					if (typelist == null)
-					{
-						typelist = new CopyOnWriteArrayList<Class<?>>();
-					}
-					typelist.add(parastype);
-
-					List<Subsciber> observerList = eventTypeMap.get(parastype);
-
-					if (observerList == null)
-					{
-						observerList = new CopyOnWriteArrayList<Subsciber>();
-					}
-
-					Subsciber sb = new Subsciber(object, priority);
-					sb.mMethod = method;
-
-					if (observerList.size() == 0)
-						observerList.add(sb);
-					else
-                        // add to list in order by priority
-						for (int j = 0; j < observerList.size(); j++)
-						{
-							if (observerList.get(j).priority >= sb.priority)
-							{
-								observerList.add(j, sb);
-								break;
-							}
-						}
-
-					eventTypeMap.put(parastype, observerList);
-					mObserversMap.put(object, typelist);
-
-				}
-			}
-		} catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-	}
-
-	public void registerByAnnotation(Object object)
-	{
-		registerByAnnotation(object, 0);
-	}
-
-	public synchronized void registerByAnnotation(Object object, int priority)
 	{
 		Class<?> type = object.getClass();
 		Method[] methods = type.getDeclaredMethods();
@@ -144,7 +75,7 @@ public class EventBus
 				{
 					// if is not public	
 					if (!Modifier.isPublic(method.getModifiers()))																// public
-						throw new Exception("onEvent method is not public");
+						throw new Exception("method is not public");
 					threadmode = observers.value();
 
 					Class<?>[] parasTypes = method.getParameterTypes();
