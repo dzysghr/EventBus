@@ -2,28 +2,39 @@ package com.dzy.eventsbus;
 
 import java.lang.reflect.Method;
 
-public class Subsciber
+public class Subscriber
 {
 	public Object mObject;
 	public int priority;
 	public Method mMethod;
 	public int ThreadMode = 1;
+
 	
-	
-	
-	public Subsciber(Object o)
+	public Subscriber(Object o)
 	{
 		mObject = o;
 	}
 	
-	public Subsciber(Object o,int p)
+	public Subscriber(Object o, int p)
 	{
 		mObject = o;
 		priority = p;
 	}
-	
-	
-	@Override
+
+
+
+    public Subscriber Clone(Object object,int p)
+    {
+
+        Subscriber sb = new Subscriber(object,p);
+        sb.mMethod = this.mMethod;
+        sb.ThreadMode = this.ThreadMode;
+
+        return sb;
+
+    }
+
+    @Override
 	public boolean equals(Object obj)
 	{
 		return mObject.equals(obj);

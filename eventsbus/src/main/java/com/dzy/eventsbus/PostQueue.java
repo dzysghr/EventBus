@@ -1,10 +1,10 @@
 package com.dzy.eventsbus;
 
-import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.LinkedBlockingDeque;
 
 public class PostQueue
 {
-	private ArrayBlockingQueue<PostRequest> mQueue;
+	private LinkedBlockingDeque<PostRequest> mQueue;
 
     private PostProcessThread mProcessThread;
 
@@ -12,7 +12,7 @@ public class PostQueue
 
 	public PostQueue()
 	{
-		mQueue = new ArrayBlockingQueue<PostRequest>(16);
+		mQueue = new LinkedBlockingDeque<PostRequest>();
 	}
 
 

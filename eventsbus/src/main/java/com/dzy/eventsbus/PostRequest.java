@@ -8,15 +8,15 @@ import java.lang.reflect.Method;
  */
 public class PostRequest
 {
-    public Subsciber mSubsciber;
+    public Subscriber mSubscriber;
     public Object mParams;
     public int ThreadMode;
     public Method mMethod;
-    public PostRequest(Subsciber subsciber, Object params)
+    public PostRequest(Subscriber subscriber, Object params)
     {
-        mSubsciber = subsciber;
+        mSubscriber = subscriber;
         mParams = params;
-        ThreadMode = subsciber.ThreadMode;
-        mMethod = subsciber.mMethod;
+        ThreadMode = subscriber.ThreadMode;
+        mMethod = subscriber.mMethod;
     }
 }

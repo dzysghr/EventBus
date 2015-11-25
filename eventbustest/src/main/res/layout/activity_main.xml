@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,9 +11,21 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/tv"
+        android:id="@+id/btn"
         android:onClick="onClick"
-        android:text="Hello World!"
+        android:text="register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
-</RelativeLayout>
+    <Button
+        android:id="@+id/btnPost"
+        android:onClick="onPost"
+        android:text="Post"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/btnshow"
+        android:onClick="onShow"
+        android:text="show info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

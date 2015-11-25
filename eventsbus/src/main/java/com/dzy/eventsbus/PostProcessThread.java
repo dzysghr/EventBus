@@ -4,9 +4,9 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingDeque;
 
 public class PostProcessThread extends Thread
 {
@@ -14,10 +14,10 @@ public class PostProcessThread extends Thread
     private Executor mExecutor = Executors.newFixedThreadPool(ThreadPoorCount);
     public static final int ThreadPoorCount = 3;
 
-    ArrayBlockingQueue<PostRequest> mQueue;
+    LinkedBlockingDeque<PostRequest> mQueue;
     private boolean mQuit = false;
 
-    public PostProcessThread(ArrayBlockingQueue<PostRequest> queue)
+    public PostProcessThread(LinkedBlockingDeque<PostRequest> queue)
     {
         mQueue = queue;
     }
@@ -28,6 +28,7 @@ public class PostProcessThread extends Thread
         PostRequest request;
         for (; ; ) {
             request = null;
+
             try {
                 request = mQueue.take();
             }
@@ -68,7 +69,7 @@ public class PostProcessThread extends Thread
         public void run()
         {
             try {
-                mPostRequest.mMethod.invoke(mPostRequest.mSubsciber.mObject, mPostRequest.mParams);
+                mPostRequest.mMethod.invoke(mPostRequest.mSubscriber.mObject, mPostRequest.mParams);
             }
             catch (Exception e) {
                 e.printStackTrace();
