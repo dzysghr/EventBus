@@ -46,3 +46,7 @@ EventBus.getInstant().registerOnEvent(object observer,int priority);
 ```
 EventBus.getInstant().post("this is a msg");
 ```
+## 注销注册
+```
+EventBus.getInstant().unRegister(object observer);
+```
