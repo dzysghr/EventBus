@@ -3,6 +3,18 @@
 
 # 如何使用
 
+## 编写事件类
+```
+public class BaseEvent
+{
+    public String msg;
+    public BaseEvent(String m)
+    {
+        msg = m;
+    }
+}
+```
+
 ## 获得EventBus实例
 
 ```
@@ -16,23 +28,24 @@ EventBus.getInstant()
 public class testobject
 {
     //在主线程调用
-    public void onMainEvent(String msg)
+    public void onMainEvent(BaseEvent msg)
     {
         Log.i("tag",msg);
     }
     
     //在后台线程调用
-    public void oBackgroundEvent(String msg)
+    public void oBackgroundEvent(BaseEvent msg)
     {
         Log.i("tag",msg);
     }
 
     //在事件发布线程调用
-    public void onPostEvent(String msg)
+    public void onPostEvent(BaseEvent msg)
     {
         Log.i("tag",msg);
     }
 }
+>注：根据线程情况需求编写方法，响应方法名一定要严格一致，方法参数只能有一个，***参数类型即为事件的类型***
 
 ```
 ### 方法二:使用注解标注（注解会影响事件注册的速度）
@@ -44,18 +57,17 @@ public class testobject
     }
 
     @Observers(ThreadMode.BackgroudThread)
-    public void onBackgroudAnnotation(String msg)
+    public void onBackgroudAnnotation(BaseEvent msg)
     {
         Log.i("tag",msg);
     }
 
     @Observers(ThreadMode.PostThread)
-    public void onPostAnnotation(String msg)
+    public void onPostAnnotation(BaseEvent msg)
     {
         Log.i("tag",msg);
     }
 ```
->注：根据线程情况需求编写方法，响应方法名一定要严格一致，方法参数只能有一个，***参数类型即为事件的类型，不支持参数协变***
 
 ## 注册事件
 ```
@@ -70,8 +82,9 @@ EventBus.getInstant().registerByAnnotation(object observer,int priority);
 
 ## 发布事件
 ```
-EventBus.getInstant().post("this is a msg");
+EventBus.getInstant().post(new BaseEvent("this is a new event"));
 ```
+>支持事件继承
 ## 注销注册
 ```
 EventBus.getInstant().unRegister(object observer);
