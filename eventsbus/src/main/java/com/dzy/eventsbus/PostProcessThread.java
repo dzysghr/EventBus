@@ -12,6 +12,7 @@ public class PostProcessThread extends Thread
 {
     final static private Handler mMainHandler = new Handler(Looper.getMainLooper());
     private Executor mExecutor = Executors.newFixedThreadPool(ThreadPoorCount);
+
     public static final int ThreadPoorCount = 3;
 
     LinkedBlockingDeque<PostRequest> mQueue;

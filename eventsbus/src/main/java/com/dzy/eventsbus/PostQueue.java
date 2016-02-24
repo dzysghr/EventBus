@@ -9,7 +9,6 @@ public class PostQueue
     private PostProcessThread mProcessThread;
 
 
-
 	public PostQueue()
 	{
 		mQueue = new LinkedBlockingDeque<PostRequest>();
