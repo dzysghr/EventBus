@@ -45,9 +45,9 @@ public class testobject
         Log.i("tag",msg);
     }
 }
+```
 >注：根据线程情况需求编写方法，响应方法名一定要严格一致，方法参数只能有一个，***参数类型即为事件的类型***
 
-```
 ### 方法二:使用注解标注（注解会影响事件注册的速度）
 ```
     @Observers(ThreadMode.MainThread)
@@ -85,6 +85,7 @@ EventBus.getInstant().registerByAnnotation(object observer,int priority);
 EventBus.getInstant().post(new BaseEvent("this is a new event"));
 ```
 >支持事件继承
+
 ## 注销注册
 ```
 EventBus.getInstant().unRegister(object observer);
