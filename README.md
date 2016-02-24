@@ -35,7 +35,7 @@ public class testobject
 }
 
 ```
-### 方法二:使用注解标注
+### 方法二:使用注解标注（注解会影响事件注册的速度）
 ```
     @Observers(ThreadMode.MainThread)
     public void onMainAnnotation(String msg)
