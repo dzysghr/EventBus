@@ -32,28 +32,25 @@ public class MainActivity extends AppCompatActivity
 
     public void onClick(View v)
     {
-
         long start = System.currentTimeMillis();
-        List<testobject> list = new ArrayList<>();
-        for (int i=0;i<1;i++)
+        List<EventTestObject> list = new ArrayList<>();
+        for (int i=0;i<3;i++)
         {
-            testobject ob = new testobject();
-            EventBus.getInstant().registerOnEvent(ob,0);
+            EventTestObject ob = new EventTestObject();
+            EventBus.getInstant().registerByAnnotation(ob, 0);
             list.add(ob);
         }
         long end = System.currentTimeMillis();
 
-        Log.i("tag","register time"+(end-start));
+        Log.i("tag","register time "+(end-start));
     }
-
-
     public void onPost(View v)
     {
         long start = System.currentTimeMillis();
-        EventBus.getInstant().post("this is a msg");
+        EventBus.getInstant().post(new MyEvent("event"));
         long end = System.currentTimeMillis();
 
-        Log.i("post", "post time" + (end - start));
+        Log.i("post", "post time " + (end - start));
     }
 
     public void onShow(View v)
