@@ -2,7 +2,7 @@ package com.dzy.eventsbus;
 
 import android.support.annotation.IntRange;
 import android.util.Log;
-import android.util.LruCache;
+
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.List;
@@ -14,19 +14,19 @@ import java.util.concurrent.CopyOnWriteArraySet;
 
 public class EventBus
 {
-	//eventtype - subsriber
+	/*eventtype - subsriber*/
 	private Map<Class<?>, List<Subscriber>> eventTypeMap = new ConcurrentHashMap<>();
 
 	//object - eventtype
 	private Map<Object,List<Class<?>>> mObserversMap = new ConcurrentHashMap<>();
 
-	private Set<Object> mObservers = new CopyOnWriteArraySet<>(); //prevent to register twice times;
+	private Set<Object> mObservers = new CopyOnWriteArraySet<>(); //prevent to registerByAnnotation twice times;
 
-	private LruCache<Class<?>,Subscriber> mSbCache = new LruCache<>(10);
+	//private LruCache<Class<?>,Subscriber> mSbCache = new LruCache<>(10);
 
 	private PostQueue mQueue;
 
-	private static EventBus mEventBus = new EventBus();
+	private static EventBus mEventBus;
 
     public EventBus()
     {
@@ -34,6 +34,7 @@ public class EventBus
         mQueue.start();
     }
 
+	//for debug
 	public void showinfo()
     {
         Log.i("tag","eventtypemap  "+eventTypeMap.size());
@@ -43,6 +44,8 @@ public class EventBus
 
 	public static EventBus getInstant()
 	{
+        if (mEventBus==null)
+            mEventBus = new EventBus();
 		return mEventBus;
 	}
 
@@ -70,9 +73,9 @@ public class EventBus
 	}
 
 
-	public void register(Object object)
+	public void registerByAnnotation(Object object)
 	{
-		register(object, 0);
+		registerByAnnotation(object, 0);
 	}
 
     public synchronized void registerOnEvent(Object ob)
@@ -86,7 +89,8 @@ public class EventBus
             return;
         Class<?> type = object.getClass();
         Method[] methods = type.getDeclaredMethods();
-        List<Class<?>> typelist = null;
+
+        List<Class<?>> typelist = null;//event types
         int DefaultMode = 1; //post thread
 
         try
@@ -151,7 +155,6 @@ public class EventBus
                     eventTypeMap.put(parastype, observerList);
                     mObserversMap.put(object,typelist);
 
-
                     mObservers.add(object);
 
                 }
@@ -163,7 +166,8 @@ public class EventBus
     }
 
 
-	public synchronized void register(Object object,@IntRange(from = 0,to = 100)  int priority)
+	public synchronized void registerByAnnotation(Object object, @IntRange(from = 0,
+			to = 100) int priority)
 	{
 
 		if (mObservers.contains(object))

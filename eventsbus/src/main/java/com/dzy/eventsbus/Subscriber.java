@@ -8,7 +8,6 @@ public class Subscriber
 	public int priority;
 	public Method mMethod;
 	public int ThreadMode = 1;
-
 	
 	public Subscriber(Object o)
 	{
@@ -25,11 +24,9 @@ public class Subscriber
 
     public Subscriber Clone(Object object,int p)
     {
-
         Subscriber sb = new Subscriber(object,p);
         sb.mMethod = this.mMethod;
         sb.ThreadMode = this.ThreadMode;
-
         return sb;
 
     }

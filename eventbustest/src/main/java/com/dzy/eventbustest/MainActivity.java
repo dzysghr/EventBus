@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity
 
         long start = System.currentTimeMillis();
         List<testobject> list = new ArrayList<>();
-        for (int i=0;i<100;i++)
+        for (int i=0;i<1;i++)
         {
             testobject ob = new testobject();
             EventBus.getInstant().registerOnEvent(ob,0);
@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity
     {
         long start = System.currentTimeMillis();
         EventBus.getInstant().post("this is a msg");
-
         long end = System.currentTimeMillis();
 
         Log.i("post", "post time" + (end - start));
